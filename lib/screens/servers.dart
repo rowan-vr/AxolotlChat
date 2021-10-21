@@ -9,14 +9,14 @@ class ServersScreen extends StatefulWidget {
   const ServersScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ServerState();
+  State<StatefulWidget> createState() => ServerState();
 }
 
-class _ServerState extends State<ServersScreen> {
+class ServerState extends State<ServersScreen> {
   late Map<String, ServerEntry> serverList;
   int state = 0;
 
-  Future _loadServers() async {
+  Future loadServers() async {
     var _serverList = await Storage.savedServers;
     serverList = {};
     for (String name in _serverList.keys) {
@@ -32,12 +32,11 @@ class _ServerState extends State<ServersScreen> {
   @override
   void initState() {
     super.initState();
-    _loadServers();
+    loadServers();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(state);
     switch (state) {
       case 0:
         return _loadingWidget(context);
@@ -68,11 +67,12 @@ class _ServerState extends State<ServersScreen> {
               const Text("You don't have any servers added."),
               FittedBox(
                   child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        await Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const AddServer()));
+                        loadServers();
                       },
                       child: const Center(child: Text("Add server"))))
             ])));
@@ -130,11 +130,12 @@ class _ServerState extends State<ServersScreen> {
 
       return Scaffold(
           appBar: AppBar(title: const Text("My Servers")),
-          body: Column(children: elements),
+          body: SingleChildScrollView(child: Column(children: elements)),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context,
+            onPressed: () async {
+              await Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AddServer()));
+              loadServers();
             },
             tooltip: 'Add Server',
             child: const Icon(Icons.add),
