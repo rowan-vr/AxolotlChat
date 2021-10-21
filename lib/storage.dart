@@ -15,7 +15,7 @@ class Storage {
     return File('$path/servers.json');
   }
 
-  static Future<Map> get savedServers async {
+  static Future<Map<String, dynamic>> get savedServers async {
     File file = await _serverList;
     if (file.existsSync()) {
       String content = await file.readAsString();
