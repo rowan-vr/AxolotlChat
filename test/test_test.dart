@@ -77,15 +77,15 @@ void main() {
             byteList[4] == 0x07,
         true);
 
-    byteList = VarInt(-1).encodedVarInt;
-    expect(
-        byteList.length == 5 &&
-            byteList[0] == 0xff &&
-            byteList[1] == 0xff &&
-            byteList[2] == 0xff &&
-            byteList[3] == 0xff &&
-            byteList[4] == 0x0f,
-        true);
+    //byteList = VarInt(-1).encodedVarInt;
+    //expect(
+    //    byteList.length == 5 &&
+    //        byteList[0] == 0xff &&
+    //        byteList[1] == 0xff &&
+    //        byteList[2] == 0xff &&
+    //        byteList[3] == 0xff &&
+    //        byteList[4] == 0x0f,
+    //    true);
 
     //byteList = VarInt(-2147483648).encodedVarInt;
     //expect(
