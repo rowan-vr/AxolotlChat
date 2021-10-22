@@ -33,6 +33,7 @@ jobs:
           channel: 'beta'
       - run: dart --version
       - run: flutter --version
+      - run: flutter test
   build_ios:
     name: Build Flutter (iOS)
     runs-on: macOS-latest
