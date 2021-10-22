@@ -50,5 +50,51 @@ void main() {
     byteList = VarInt(255).encodedVarInt;
     expect(byteList.length == 2 && byteList[0] == 0xff && byteList[1] == 0x01,
         true);
+
+    byteList = VarInt(25565).encodedVarInt;
+    expect(
+        byteList.length == 3 &&
+            byteList[0] == 0xdd &&
+            byteList[1] == 0xc7 &&
+            byteList[2] == 0x01,
+        true);
+
+    byteList = VarInt(2097151).encodedVarInt;
+    expect(
+        byteList.length == 3 &&
+            byteList[0] == 0xff &&
+            byteList[1] == 0xff &&
+            byteList[2] == 0x7f,
+        true);
+
+    byteList = VarInt(2147483647).encodedVarInt;
+    expect(
+        byteList.length == 5 &&
+            byteList[0] == 0xff &&
+            byteList[1] == 0xff &&
+            byteList[2] == 0xff &&
+            byteList[3] == 0xff &&
+            byteList[4] == 0xff,
+        true);
+
+    byteList = VarInt(-1).encodedVarInt;
+    expect(
+        byteList.length == 5 &&
+            byteList[0] == 0xff &&
+            byteList[1] == 0xff &&
+            byteList[2] == 0xff &&
+            byteList[3] == 0xff &&
+            byteList[4] == 0x0f,
+        true);
+
+    byteList = VarInt(-2147483648).encodedVarInt;
+    expect(
+        byteList.length == 5 &&
+            byteList[0] == 0x80 &&
+            byteList[1] == 0x80 &&
+            byteList[2] == 0x80 &&
+            byteList[3] == 0x80 &&
+            byteList[4] == 0x08,
+        true);
   });
 }
