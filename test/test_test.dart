@@ -74,7 +74,7 @@ void main() {
             byteList[1] == 0xff &&
             byteList[2] == 0xff &&
             byteList[3] == 0xff &&
-            byteList[4] == 0xff,
+            byteList[4] == 0x07,
         true);
 
     byteList = VarInt(-1).encodedVarInt;
