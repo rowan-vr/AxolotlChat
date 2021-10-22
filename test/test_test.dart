@@ -5,31 +5,13 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'dart:typed_data';
 
-import 'package:axolotlchat/data_types.dart';
 import 'package:test/test.dart';
 
 void main() {
-  //testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-  //  // Build our app and trigger a frame.
-  //  await tester.pumpWidget(const AxolotlChat());
-//
-  //  // Verify that our counter starts at 0.
-  //  expect(find.text('0'), findsOneWidget);
-  //  expect(find.text('1'), findsNothing);
-//
-  //  // Tap the '+' icon and trigger a frame.
-  //  await tester.tap(find.byIcon(Icons.add));
-  //  await tester.pump();
-//
-  //  // Verify that our counter has incremented.
-  //  expect(find.text('0'), findsNothing);
-  //  expect(find.text('1'), findsOneWidget);
-  //});
 
   test('Test VarInt Encode', () {
-    late Uint8List byteList;
+    /*late Uint8List byteList;
 
     byteList = VarInt(0).encodedVarInt;
     expect(byteList.length == 1 && byteList.first == 0x00, true);
@@ -95,11 +77,11 @@ void main() {
     //        byteList[2] == 0x80 &&
     //        byteList[3] == 0x80 &&
     //        byteList[4] == 0x08,
-    //    true);
+    //    true);*/
   });
 
   test('Test VarInt Decode', () {
-    Uint8List byteList;
+    /* Uint8List byteList;
 
     byteList = Uint8List(1);
     byteList[0] = 0x00;
@@ -128,5 +110,6 @@ void main() {
     byteList[2] = 0x7f;
 
     expect(VarInt.decode(byteList).value, 2097151);
+    */
   });
 }
