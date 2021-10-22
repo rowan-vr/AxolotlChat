@@ -72,7 +72,8 @@ jobs:
       with:
         name: apk-build
         path: build/apk
-  build-win:
+  build_win:
+    name: Build Flutter (win)
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
