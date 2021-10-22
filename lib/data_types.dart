@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 class VarInt {
@@ -11,12 +12,14 @@ class VarInt {
     int value = 0;
     int bitOffset = 0;
     int currentByte;
+    int i = data.length - 1;
     do {
-      currentByte = data.removeLast();
+      currentByte = data[i];
 
       value |= (currentByte & 0x80) << bitOffset;
 
       bitOffset += 7;
+      i--;
     } while ((currentByte & 0x80) != 0);
     return VarInt(value);
   }
@@ -79,5 +82,25 @@ class VarLong {
 
   int get longValue {
     return value;
+  }
+}
+
+class EncodedString {
+  String? value;
+
+  EncodedString(this.value);
+
+  factory EncodedString.decode(Uint8List data) {
+    var length = VarInt.decode(data.sublist(0, 4)).value;
+    return EncodedString(utf8.decode(data.sublist(5, 5 + length)));
+  }
+
+  Uint8List get encodedString {
+    if (value == null) return Uint8List(0);
+    BytesBuilder builder = BytesBuilder();
+    final stringData = utf8.encode(value!);
+    builder.add(VarInt(stringData.length).encodedVarInt);
+    builder.add(stringData);
+    return builder.toBytes();
   }
 }
