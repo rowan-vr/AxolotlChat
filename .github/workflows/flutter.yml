@@ -72,6 +72,11 @@ jobs:
       with:
         name: apk-build
         path: build/app/outputs/apk/release
+    - name: Upload App Blundle
+      uses: actions/upload-artifact@master
+      with:
+        name: app-bundle-build
+        path: build/app/outputs/bundle/release
   build_win:
     name: Build Flutter (win)
     runs-on: windows-latest
