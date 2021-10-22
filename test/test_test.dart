@@ -28,7 +28,7 @@ void main() {
   //  expect(find.text('1'), findsOneWidget);
   //});
 
-  test('Test VarInt', () {
+  test('Test VarInt Encode', () {
     late Uint8List byteList;
 
     byteList = VarInt(0).encodedVarInt;
@@ -96,5 +96,37 @@ void main() {
             byteList[3] == 0x80 &&
             byteList[4] == 0x08,
         true);
+  });
+
+  test('Test VarInt Decode', () {
+    Uint8List byteList;
+
+    byteList = Uint8List(1);
+    byteList[0] = 0x00;
+    expect(VarInt.decode(byteList).value, 0);
+
+    byteList = Uint8List(1);
+    byteList[0] = 0x01;
+    expect(VarInt.decode(byteList).value, 1);
+
+    byteList = Uint8List(1);
+    byteList[0] = 0x02;
+    expect(VarInt.decode(byteList).value, 2);
+
+    byteList = Uint8List(1);
+    byteList[0] = 0x7f;
+    expect(VarInt.decode(byteList).value, 127);
+
+    byteList = Uint8List(2);
+    byteList[0] = 0x80;
+    byteList[1] = 0x01;
+    expect(VarInt.decode(byteList).value, 128);
+
+    byteList = Uint8List(3);
+    byteList[0] = 0xff;
+    byteList[1] = 0xff;
+    byteList[2] = 0x7f;
+
+    expect(VarInt.decode(byteList).value, 2097151);
   });
 }
