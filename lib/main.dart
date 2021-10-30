@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import 'screens/servers.dart';
 
@@ -17,6 +18,6 @@ class AxolotlChat extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: const ServersScreen());
+        home: const OverlaySupport(child: ServersScreen()));
   }
 }

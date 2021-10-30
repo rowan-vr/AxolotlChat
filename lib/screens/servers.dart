@@ -47,7 +47,7 @@ class ServerState extends State<ServersScreen> {
       case 1:
         return _noServerWidget(context);
       case 2:
-        return OverlaySupport(child: _serverListWidget(context));
+        return _serverListWidget(context);
       default:
         return _noServerWidget(context);
     }
