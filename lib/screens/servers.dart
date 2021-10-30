@@ -68,18 +68,18 @@ class ServerState extends State<ServersScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text("You don't have any servers added."),
-                  FittedBox(
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const AddServer()));
-                            loadServers();
-                          },
-                          child: const Center(child: Text("Add server"))))
-                ])));
+              const Text("You don't have any servers added."),
+              FittedBox(
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AddServer()));
+                        loadServers();
+                      },
+                      child: const Center(child: Text("Add server"))))
+            ])));
   }
 
   Widget _serverListWidget(BuildContext context) {
@@ -87,15 +87,15 @@ class ServerState extends State<ServersScreen> {
         builder: (BuildContext context, BoxConstraints constraints) {
           List<Widget> elements = List.empty(growable: true);
 
-          elements.add(ConstrainedBox(
-              constraints: BoxConstraints(
-                  minHeight: 2,
-                  maxHeight: 2,
-                  minWidth: constraints.maxWidth,
-                  maxWidth: constraints.maxWidth),
-              child: Container(color: Colors.grey[800])));
+      elements.add(ConstrainedBox(
+          constraints: BoxConstraints(
+              minHeight: 2,
+              maxHeight: 2,
+              minWidth: constraints.maxWidth,
+              maxWidth: constraints.maxWidth),
+          child: Container(color: Colors.grey[800])));
 
-          for (final String name in serverList.keys) {
+      for (final String name in serverList.keys) {
         elements.add(InkWell(
             onTap: serverList[name]?.pinging as bool
                 ? () {
@@ -159,10 +159,15 @@ class ServerState extends State<ServersScreen> {
         }
       }
 
-          return Scaffold(
-              appBar: AppBar(title: const Text("My Servers")),
-              body: SingleChildScrollView(child: Column(children: elements)),
-              floatingActionButton: FloatingActionButton(
+      return Scaffold(
+          appBar: AppBar(title: const Text("My Servers")),
+          body: RefreshIndicator(
+            child: SingleChildScrollView(child: Column(children: elements)),
+            onRefresh: () {
+              return loadServers();
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
             onPressed: () async {
               await Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AddServer()));
