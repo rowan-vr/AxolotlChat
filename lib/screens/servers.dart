@@ -301,7 +301,55 @@ class ServerState extends State<ServersScreen> {
           child: const Text("No", style: TextStyle(color: Colors.black)),
         ),
         ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              late BuildContext dialog;
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    dialog = context;
+                    return AlertDialog(
+                        title: const Text('Saving server...'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const <Widget>[
+                            Center(
+                                child: SpinKitDualRing(
+                                    color: Colors.green, size: 50.0))
+                          ],
+                        ));
+                  });
+              await Storage.removeServer(entry.name);
+              Navigator.pop(dialog);
+              await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    dialog = context;
+                    return AlertDialog(
+                      title: const Text('Server deleted!'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const <Widget>[
+                          Text(
+                              "The server has been removed from your server list."),
+                        ],
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Close'),
+                        ),
+                      ],
+                    );
+                  });
+              Navigator.pop(context);
+              setState(() {
+                loadServers();
+              });
+            },
             child: const Text("Yes"),
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.red)))

@@ -35,7 +35,19 @@ class Storage {
       file.createSync();
     }
     servers[name] = address;
-    file.writeAsString(jsonEncode(servers));
+    await file.writeAsString(jsonEncode(servers));
+    return;
+  }
+
+  static Future removeServer(String name) async {
+    File file = await _serverList;
+    Map<String, dynamic> servers = {};
+    if (file.existsSync()) {
+      String content = await file.readAsString();
+      servers = jsonDecode(content);
+      servers.remove(name);
+      await file.writeAsString(jsonEncode(servers));
+    }
     return;
   }
 }
