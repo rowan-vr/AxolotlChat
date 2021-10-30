@@ -13,11 +13,12 @@ class AxolotlChat extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Axolotl Chat | The modern minecraft chat client.',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        home: const OverlaySupport(child: ServersScreen()));
+    return OverlaySupport(
+        child: MaterialApp(
+            title: 'Axolotl Chat | The modern minecraft chat client.',
+            theme: ThemeData(
+              primarySwatch: Colors.green,
+            ),
+            home: const ServersScreen()));
   }
 }
