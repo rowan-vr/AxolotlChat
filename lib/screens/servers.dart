@@ -41,6 +41,25 @@ class ServerState extends State<ServersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: const Text("My Servers")),
+        body: _buildWidget(context),
+        floatingActionButton: (state == 2)
+            ? FloatingActionButton(
+                onPressed: () async {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddServer()));
+                  loadServers();
+                },
+                tooltip: 'Add Server',
+                child: const Icon(Icons.add),
+              )
+            : null);
+  }
+
+  Widget _buildWidget(BuildContext context) {
     switch (state) {
       case 0:
         return _loadingWidget(context);
@@ -54,32 +73,28 @@ class ServerState extends State<ServersScreen> {
   }
 
   Widget _loadingWidget(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text("My Servers")),
-        body: const Center(
-            child: SpinKitDualRing(color: Colors.green, size: 50.0)));
+    return const Center(
+        child: SpinKitDualRing(color: Colors.green, size: 50.0));
   }
 
   Widget _noServerWidget(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text("My Servers")),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-              const Text("You don't have any servers added."),
-              FittedBox(
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AddServer()));
-                        loadServers();
-                      },
-                      child: const Center(child: Text("Add server"))))
-            ])));
+    return Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+          const Text("You don't have any servers added."),
+          FittedBox(
+              child: ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddServer()));
+                    loadServers();
+                  },
+                  child: const Center(child: Text("Add server"))))
+        ]));
   }
 
   Widget _serverListWidget(BuildContext context) {
@@ -159,23 +174,12 @@ class ServerState extends State<ServersScreen> {
         }
       }
 
-      return Scaffold(
-          appBar: AppBar(title: const Text("My Servers")),
-          body: RefreshIndicator(
-            child: SingleChildScrollView(child: Column(children: elements)),
-            onRefresh: () {
-              return loadServers();
-            },
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              await Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AddServer()));
-              loadServers();
-            },
-            tooltip: 'Add Server',
-            child: const Icon(Icons.add),
-          ));
+          return RefreshIndicator(
+        child: SingleChildScrollView(child: Column(children: elements)),
+        onRefresh: () {
+          return loadServers();
+        },
+      );
     });
   }
 
